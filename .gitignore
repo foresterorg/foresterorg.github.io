@@ -1,0 +1,4 @@
+# Hugo default output directory
+.hugo_build.lock
+/public
+/resources
