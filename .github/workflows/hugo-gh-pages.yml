@@ -35,7 +35,7 @@ jobs:
           hugo-version: '0.110.0'
           extended: true
       - name: Build
-        run: hugo --minify
+        run: hugo --minify --buildDrafts
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
