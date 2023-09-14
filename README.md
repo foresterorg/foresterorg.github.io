@@ -24,3 +24,9 @@ And run the server with `-D` to include drafted pages.
 ```
 hugo server -D
 ```
+
+## LICENSE
+
+Creative Commons CC0 Universal
+
+Photos with permission from Strojírna Novotný s.r.o, [loader.cz](https://www.loader.cz).
