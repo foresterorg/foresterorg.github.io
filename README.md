@@ -13,7 +13,7 @@ Download hugo modules (we use themes through modules).
 hugo mod get
 ```
 
-Download npm packages used for postprocessing css files.
+Download npm packages used for postprocessing css files if you plan to do CSS changes:
 
 ```
 npm i
