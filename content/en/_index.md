@@ -36,7 +36,7 @@ Setup your servers for HTTP UEFI Boot and configure Redfish credentials in Fores
 
 
 {{% blocks/feature icon="fa-gas-pump" title="Deploy" %}}
-Start deploying images onto your bare-metal servers en-masse.
+Start deploying images onto your bare-metal servers en-masse via Forester API or CLI.
 {{% /blocks/feature %}}
 {{% /blocks/section %}}
 
