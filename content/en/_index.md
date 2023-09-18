@@ -2,7 +2,11 @@
 title: Forester Project
 ---
 
+
 {{< blocks/cover title="Forester Project" image_anchor="top" height="full" >}}
+
+<div class="mb-4"><img src="/logo128.png"/></div>
+
 <a class="btn btn-lg btn-primary me-3 mb-4" href="/about/">
   Learn More <i class="fas fa-lightbulb ms-2"></i>
 </a>
