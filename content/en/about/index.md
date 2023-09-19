@@ -89,7 +89,7 @@ Upload an image generated from [Image Builder](https://console.redhat.com/insigh
 
     forester-cli image upload --name RHEL9-2023-11a rhel9-image-from-portal.iso
 
-# Deploying images
+# Deploy images
 
 To install an image onto a system, perform `acquire` operation and provide both image name and system name or one of its MAC addresses:
 
