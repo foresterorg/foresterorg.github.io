@@ -1,6 +1,6 @@
 ---
-title: Forester Setup
-linkTitle: Setup
+title: Quick start
+linkTitle: Quickstart
 menu: {main: {weight: 10}}
 ---
 
@@ -68,6 +68,8 @@ A user account should be created with the following permissions:
 * Power operations (soft and hard power cycles).
 
 For POCs, root account can be used.
+
+If you don't have available hardware for POC, it is possible to [configure libvirt](/docs/contributing/#libvirt-setup) instead. It has some limitations tho and it is only recommended for development purposes.
 
 {{% /blocks/section %}}
 
