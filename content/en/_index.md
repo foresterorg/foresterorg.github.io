@@ -7,7 +7,7 @@ title: Forester Project
 
 <div class="mb-4"><img src="/logo128.png"/></div>
 
-<a class="btn btn-lg btn-primary me-3 mb-4" href="/about/">
+<a class="btn btn-lg btn-primary me-3 mb-4" href="/quickstart/">
   Learn More <i class="fas fa-lightbulb ms-2"></i>
 </a>
 <a class="btn btn-lg btn-secondary me-3 mb-4" href="/docs/">
@@ -66,7 +66,7 @@ We are gathering feedback from Fedora users and Red Hat customers.
 Report [Issues](https://github.com/foresterorg/forester) or send us feedback or a [Pull Request](https://github.com/foresterorg/forester) on **GitHub**.
 {{% /blocks/feature %}}
 
-{{% blocks/feature icon="fab fa-readme" title="Where to go next" url="/about/" %}}
+{{% blocks/feature icon="fab fa-readme" title="Where to go next" url="/quickstart/" %}}
 More information about Forester, installation and how it works.
 {{% /blocks/feature %}}
 
