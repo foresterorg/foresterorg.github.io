@@ -7,6 +7,8 @@ description: >
 
 Forester is a bare-metal image-based unattended provisioning service for Red Hat Anaconda (Fedora, RHEL, CentOS Stream, Alma Linux...) with simplicity of configuration and use in mind. It utilizes Redfish API and UEFI HTTP Boot to deploy images created by Image Builder through Anaconda.
 
+Forester was built to install ISO images created by osbuild (also known as Image Builder), Forester will not work with the official ISO images provided by Red Hat or Fedora. This functionality might come later, but the main goal is to solve image-based story.
+
 Quick introduction to Forester for Red Hat Console Q3 Hackathon 2023:
 
 {{< youtube VK6pMjmmHhQ >}}
