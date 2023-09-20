@@ -18,6 +18,7 @@ title: Forester Project
 </a>
 <p class="lead mt-5">Unattended bare-metal image-based Anaconda installation service.</p>
 {{< blocks/link-down color="info" >}}
+
 {{< /blocks/cover >}}
 
 
@@ -54,6 +55,8 @@ To evaluate Forester, you need a Linux machine capable of running Podman contain
 
 
 {{% blocks/section type="row" %}}
+
+<script async id="asciicast-OqscgGVl79CJdeDVD1VF9d0hA" src="https://asciinema.org/a/OqscgGVl79CJdeDVD1VF9d0hA.js"></script>
 
 {{% blocks/feature icon="fa-pen-to-square" title="Give us feedback" url="https://github.com/foresterorg/forester/discussions/new?category=general"%}}
 We are gathering feedback from Fedora users and Red Hat customers.
