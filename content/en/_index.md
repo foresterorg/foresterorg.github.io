@@ -56,7 +56,7 @@ To evaluate Forester, you need a Linux machine capable of running Podman contain
 
 {{% blocks/section type="row" %}}
 
-<div style="width: 500px">
+<div style="width: 50%; text-align: center;" class="row">
 <script async id="asciicast-OqscgGVl79CJdeDVD1VF9d0hA" src="https://asciinema.org/a/OqscgGVl79CJdeDVD1VF9d0hA.js"></script>
 </div>
 
