@@ -54,11 +54,13 @@ To evaluate Forester, you need a Linux machine capable of running Podman contain
 {{% /blocks/section %}}
 
 
-{{% blocks/section type="row" %}}
-
-<div style="width: 50%; text-align: center;" class="row">
-<script async id="asciicast-OqscgGVl79CJdeDVD1VF9d0hA" src="https://asciinema.org/a/OqscgGVl79CJdeDVD1VF9d0hA.js"></script>
+<div class="row justify-content-md-center">
+  <div class="col-lg-6 col-md-8">
+    <script async id="asciicast-OqscgGVl79CJdeDVD1VF9d0hA" src="https://asciinema.org/a/OqscgGVl79CJdeDVD1VF9d0hA.js"></script>
+  </div>
 </div>
+
+{{% blocks/section type="row" %}}
 
 {{% blocks/feature icon="fa-pen-to-square" title="Give us feedback" url="https://github.com/foresterorg/forester/discussions/new?category=general"%}}
 We are gathering feedback from Fedora users and Red Hat customers.
@@ -73,4 +75,3 @@ More information about Forester, installation and how it works.
 {{% /blocks/feature %}}
 
 {{% /blocks/section %}}
-
