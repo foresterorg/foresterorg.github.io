@@ -14,7 +14,7 @@ Visit our [documentation](/docs/) for more detailed information.
 
 {{% blocks/lead %}}
 
-Forester has been designed with simplicity in mind, you only need an Anaconda OS image which you can generate on [Red Hat Portal](https://console.redhat.com/insights/image-builder) for free, and access to bare-metal hardware via out-of-band management with Redfish (e.g. iDRAC). Scroll down for installation and setup instructions.
+Forester has been designed with simplicity in mind, you only need an Anaconda OS image which you can generate on the [Red Hat Console](https://console.redhat.com/insights/image-builder) for free (with RHEL subscription), and access to bare-metal hardware via out-of-band management with Redfish (e.g. iDRAC). Scroll down for installation and setup instructions.
 
 {{% /blocks/lead %}}
 
