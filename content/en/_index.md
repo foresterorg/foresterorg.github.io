@@ -89,8 +89,11 @@ To evaluate Forester, you need a Linux machine capable of running Podman contain
 
 {{% blocks/section type="row" %}}
 
-{{% blocks/feature icon="fa-pen-to-square" title="Give us feedback" url="https://github.com/foresterorg/forester/discussions/new?category=general"%}}
-We are gathering feedback from Fedora users and Red Hat customers.
+{{% blocks/feature icon="fa-pen-to-square" title="Mailing lists" %}}
+We are looking for your feedback on our
+[forester-users](https://lists.fedoraproject.org/archives/list/forester-users@lists.fedoraproject.org/),
+[forester-devel](https://lists.fedoraproject.org/archives/list/forester-devel@lists.fedoraproject.org/) or
+[discussion forum](https://github.com/foresterorg/forester/discussions).
 {{% /blocks/feature %}}
 
 {{% blocks/feature icon="fab fa-github" title="Contribute" %}}

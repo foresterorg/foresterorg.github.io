@@ -155,6 +155,16 @@ enable = false
   icon = "fa fa-envelope"
   desc = "Discussion forum on Github.com"
 [[params.links.user]]
+  name = "Users mailing-list"
+  url = "https://lists.fedoraproject.org/archives/list/forester-users@lists.fedoraproject.org/"
+  icon = "fa fa-envelope"
+  desc = "Users mailing-list"
+[[params.links.user]]
+  name = "Developers mailing-list"
+  url = "https://lists.fedoraproject.org/archives/list/forester-devel@lists.fedoraproject.org/"
+  icon = "fa fa-envelope"
+  desc = "Developers mailing-list"
+[[params.links.user]]
   name ="Twitter"
   url = "https://twitter.com/lzap"
   icon = "fab fa-twitter"
