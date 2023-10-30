@@ -69,7 +69,7 @@ description = "A Docsy example site"
 section = ["HTML", "print", "RSS"]
 
 [params]
-copyright = "The Forester Project, photos with permission from loader.cz, "
+copyright = "The Forester Project, Red Hat, Lukáš Zapletal. Logo art by Sunil Malagi, photos with permission from loader.cz. Code licensed under GNU GPL. "
 #privacy_policy = "https://policies.google.com/privacy"
 
 # First one is picked as the Twitter card image if not set on page.
