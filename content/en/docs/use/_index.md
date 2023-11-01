@@ -5,6 +5,50 @@ description: >
   Operation instructions.
 ---
 
+## Build an image
+
+Images can be built on [Red Hat Console](https://console.redhat.com/insights/image-builder) or locally. Follow the instructions to perform build on your own hardware.
+
+Install composer and composer CLI and start the build service:
+
+    sudo dnf install osbuild-composer composer-cli
+    sudo systemctl enable --now osbuild-composer.socket
+
+For more information on how to setup permissions for non-root accounts, [read the project documentation](https://www.osbuild.org/guides/image-builder-on-premises/installation.html).
+
+Create a blueprint file:
+
+    cat base-image-with-vim.toml
+
+    name = "base-image-with-vim"
+    description = "A base system with vim"
+    version = "0.0.1"
+    [[packages]]
+    name = "vim"
+    version = "*"
+
+Upload the blueprint file into the service:
+
+    composer-cli blueprints push base-image-with-vim.toml
+
+To build a Fedora/RHEL installation image:
+
+    composer-cli compose start base-image-with-vim image-installer
+
+To build a Fedora IoT (or RHEL for Edge) installation image:
+
+    composer-cli compose start base-image-with-vim edge-installer
+
+Use the following command to watch the progress of the build:
+
+    composer-cli compose info UUID
+
+Once the build is finished, download the ISO file with:
+
+    composer-cli compose results UUID
+
+Composes can be deleted to save disk space using `delete` command.
+
 ## Upload an image
 
 The first step is to upload the image:
