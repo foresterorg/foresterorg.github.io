@@ -16,9 +16,7 @@ Install composer and composer CLI and start the build service:
 
 For more information on how to setup permissions for non-root accounts, [read the project documentation](https://www.osbuild.org/guides/image-builder-on-premises/installation.html).
 
-Create a blueprint file:
-
-    cat base-image-with-vim.toml
+Create a blueprint file named `base-image-with-vim.toml` with the following contents:
 
     name = "base-image-with-vim"
     description = "A base system with vim"
@@ -27,7 +25,7 @@ Create a blueprint file:
     name = "vim"
     version = "*"
 
-Upload the blueprint file into the service:
+Read the osbuild documentation for more information on customization of the image. Now, upload the blueprint file into the service:
 
     composer-cli blueprints push base-image-with-vim.toml
 
@@ -35,9 +33,32 @@ To build a Fedora/RHEL installation image:
 
     composer-cli compose start base-image-with-vim image-installer
 
-To build a Fedora IoT (or RHEL for Edge) installation image:
+Wait until it is done and then download the result tarball:
 
-    composer-cli compose start base-image-with-vim edge-installer
+    composer-cli compose results UUID
+
+You may proceed to the next chapter. To build a Fedora IoT (or RHEL for Edge) installation image, create a blueprint file named `empty.toml` with the following contents:
+
+    cat empty.toml
+    name = "empty"
+    description = "Empty blueprint"
+    version = "0.0.1"
+
+Push the empty blueprint:
+
+    composer-cli blueprints push empty.toml
+
+Build and download a new ostree repository:
+
+    composer-cli compose start base-image-with-vim iot-commit
+    composer-cli compose results UUID
+
+The ostree repository needs to be published over HTTP protocol, this is not part of this turorial.
+
+    composer-cli compose start-ostree --ref "fedora/38/x86_64/iot" --url http://zzzap.tpb.lab.eng.brq.redhat.com/~lzap/f38-iot-commit/repo/ empty iot-installer
+    composer-cli compose results UUID
+
+When building RHEL instead of Fedora, replace `iot-installer` with `edge-installer`. Also the `ref` will be different, typically `rhel/8/x86_64/edge`.
 
 Use the following command to watch the progress of the build:
 
