@@ -14,7 +14,7 @@ Visit our [documentation](/docs/) for more detailed information.
 
 {{% blocks/lead %}}
 
-Forester has been designed with simplicity in mind, you only need an Anaconda OS image which you can generate on the [Red Hat Console](https://console.redhat.com/insights/image-builder) for free (with RHEL subscription), and access to bare-metal hardware via out-of-band management with Redfish (e.g. iDRAC). Scroll down for installation and setup instructions.
+Forester has been designed with simplicity in mind, you only need an Anaconda OS image which you can generate on the [Red Hat Console](https://console.redhat.com/insights/image-builder) or locally, and access to bare-metal hardware via out-of-band management with Redfish (e.g. iDRAC). Scroll down for installation and setup instructions.
 
 {{% /blocks/lead %}}
 
@@ -40,8 +40,6 @@ The Forester service provides all functionality through port 8000 (HTTP) and sto
         -v forester-img:/img:Z \
         quay.io/forester/controller:latest
 
-Hardware requirements match Postgres, as long as there is enough CPU and memory for Postgres, Forester will run just fine. 
-
 Change `-p` argument if you wish to use different port than 8000. Uninstallation is easy and is covered in the [documentation](/docs/).
 
 Download and extract the [CLI for Linux/Mac/Windows](https://github.com/foresterorg/forester/releases) named `forester-cli`.
@@ -62,12 +60,12 @@ Enable HTTP Boot network booting and enter HTTP URI to `http:/forester:8000/boot
 
 Alternatively, URI can be provided by a DHCP server. Read more in the [documentation](/docs/).
 
-A user account should be created with the following permissions:
+A Redfish user account should be created with the following permissions:
 
 * Read/list information about system(s).
 * Power operations (soft and hard power cycles).
 
-For POCs, root account can be used.
+For POCs, the root Redfish account can be used.
 
 If you don't have available hardware for POC, it is possible to [configure libvirt](/docs/contributing/#libvirt-setup) instead. It has some limitations tho and it is only recommended for development purposes.
 
@@ -80,6 +78,10 @@ If you don't have available hardware for POC, it is possible to [configure libvi
 Register Redfish appliance by providing an URI to Redfish API of all systems which are supposed to be managed by Forester:
 
     forester-cli appliance create --kind redfish --name dellr350-a14 --uri https://root:calvin@dr350-a14.local
+
+Enlist all systems available via the appliance
+
+    forester-cli appliance enlist dellr350-a14
 
 Every recognized system has one or more MAC addresses and an auto-generated name.
 

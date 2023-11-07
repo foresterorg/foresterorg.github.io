@@ -139,7 +139,7 @@ MAC             6c:fe:54:70:60:11
 MAC             c4:5a:b1:a0:f2:b4
 Appliance Name  dell
 Appliance Kind  2
-Appliance URI   https://root:calvin@dell-r350-08-drac.mgmt.sat.rdu2.redhat.com
+Appliance URI   https://root:calvin@dr350-a14.local
 UID             4c4c4544-004c-3510-804c-c4c04f435731
 
 Fact                     Value
