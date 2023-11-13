@@ -94,9 +94,14 @@ To create a Redfish appliance use kind named "redfish":
 
     forester-cli appliance create --kind redfish --name dellr350 --uri https://root:calvin@dr350-a14.local
 
-To create appliance for hacking and development a good appliance type is libvirt through local UNIX socket:
+To create appliance for hacking and development a good appliance type is libvirt through local UNIX socket, an example for system session:
 
-    forester-cli appliance create --kind libvirt --name local
+    forester-cli appliance create --kind libvirt --name system
+
+An example for user session (URI accepts both `unix` socket or `qemu` paths):
+
+    sudo usermod -a -G libvirt $(whoami)
+    forester-cli appliance create --kind libvirt --name session --uri qemu:///session
 
 Or via TCP connection (TLS is not supported):
 
@@ -106,8 +111,9 @@ Warning: username and password are currently stored as clear text and fully read
 
     forester-cli appliance list
     ID  Name     Kind  URI
-    1   libvirt  1     unix:///var/run/libvirt/libvirt-sock
-    2   dellr350 2     https://root:calvin@dr350-a14.local
+    1   system   1     unix:///var/run/libvirt/libvirt-sock
+    2   session  1     qemu:///session
+    3   dellr350 2     https://root:calvin@dr350-a14.local
 
 ## Discover systems
 
