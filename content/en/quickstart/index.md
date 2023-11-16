@@ -105,3 +105,9 @@ To release a system and put it back to the pool of available systems:
 
 {{% /blocks/section %}}
 
+{{% blocks/section %}}
+
+[Let us know what you think](https://github.com/foresterorg/forester/discussions/new?category=general) and read more
+[in the documentation](/docs/).
+
+{{% /blocks/section %}}
