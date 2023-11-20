@@ -96,7 +96,7 @@ To create a Redfish appliance use kind named "redfish":
 
 To create appliance for hacking and development a good appliance type is libvirt through local UNIX socket, an example for system session:
 
-    forester-cli appliance create --kind libvirt --name system
+    forester-cli appliance create --kind libvirt --name system --uri qemu:///system
 
 An example for user session (URI accepts both `unix` socket or `qemu` paths):
 
@@ -106,6 +106,8 @@ An example for user session (URI accepts both `unix` socket or `qemu` paths):
 Or via TCP connection (TLS is not supported):
 
     forester-cli appliance create --kind libvirt --name remote --uri tcp://my.libvirt.local:16509
+
+It is possible to create no operation appliance which does nothing or `redfish_manual` appliance which performs detection of systems, however, it does not perform any power operations. With `noop` appliance, systems need to be registered manually whereas with `redfish_manual` systems can be detected automatically.
 
 Warning: username and password are currently stored as clear text and fully readable through the API.
 
@@ -198,14 +200,77 @@ Facts which start with `redfish` were recognized via Redfish API, other facts ca
 
     forester-cli appliance bootnet lynn
 
+## Enter system manually
+
+An alternative way of registering systems is to enter them manually, this is useful for `noop` appliance:
+
+    forester-cli system register --name my-system-13 --hwaddrs AA:BB:CC:DD:EE:FF --facts test=1 --appliance noop --uid unique_uuid
+
+Every system must have an appliance assigned, a `noop` (no operation) appliance can be used and unique string (typically UUID or random number).
+
+## Customizing installation
+
+Installation can be further customized using [Anaconda Kickstart syntax](https://pykickstart.readthedocs.io/en/latest/kickstart-docs.html) via snippets. There are several kinds of snippets which can be optionally associated with a system:
+
+* disk (partitioning layout snippet)
+* rootpw (root password snippet)
+* security (security-related snippet)
+* locale (locale-related snippet)
+* post (`%post` installation snippet)
+
+To list all snippets:
+
+    forester-cli snippet list
+    ID  Name           Kind
+    1   SingleVolume   disk
+    2   SharedPass     rootpw
+    3   InstallAnsible post
+
+To create a snippet:
+
+    forester-cli snippet create --name MySnippet --kind locale
+
+An editor (depending on the `$EDITOR` environment variable) is launched, when saved the snippet is uploaded to the service. An example content:
+
+    lang cs_CZ.UTF-8
+    keyboard 'cs'
+    timezone Europe/Prague --utc
+
+To edit or delete snippet, use appropriate `edit` or `delete` CLI subcommands.
+
+A system can have zero to any number of snippets associated and one extra "custom snippet" which can be used to provide one or more ad-hoc Kickstart lines without storing anything into the database.
+
 ## Deploy images
 
 Systems are either **released** or **acquired**. By acquisition, an operator performs installation of a specific image onto the hardware:
 
     forester-cli system acquire lynn --imagename RHEL9
 
+To customize installation with snippets:
+
+    forester-cli system acquire lynn --imagename RHEL9 --snippets SingleVolume SharedPass --customsnippet "%pre\necho Hello\n%end\n"
+
 To release a system and put it back to the pool of available systems:
 
     forester-cli system release lynn
 
 Warning: There is no authentication or authorization in the API, anyone can acquire or release systems or even add new appliances.
+
+## Troubleshooting
+
+Both hardware discovery and installation are handled by Anaconda which takes Kickstart as the input. To view current Kickstart of an existing system do:
+
+    forester-cli system kickstart lynn
+
+Depending on the state of the system, it will be either discovery Kickstart, or installation kickstart. Kickstart can be validated using `ksvalidator` command for syntax errors.
+
+Anaconda installer is configured to send all logs via syslog protocol into Forester. To list all available logs of a system:
+
+    forester-cli system logs lynn
+
+To view log contents of an installation:
+
+    forester-cli system logs lynn -d f-1-06fe9588-b50e-4ee7-8e81-1f87a8-b265e1.log
+
+Logs can be viewed as they arrive in the service, there is no "watch" feature available tho.
+
