@@ -39,11 +39,6 @@ Configure libvirt environment for booting from network via UEFI HTTP Boot, add t
           <bootp file='USE_HTTP'/>
         </dhcp>
       </ip>
-      <ip family='ipv6' address='2001:db8:dead:beef:fe::2' prefix='96'>
-        <dhcp>
-          <range start='2001:db8:dead:beef:fe::1000' end='2001:db8:dead:beef:fe::2000'/>
-        </dhcp>
-      </ip>
       <dnsmasq:options>
         <dnsmasq:option value='dhcp-vendorclass=set:efi-http,HTTPClient:Arch:00016'/>
         <dnsmasq:option value='dhcp-option-force=tag:efi-http,60,HTTPClient'/>
