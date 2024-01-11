@@ -40,9 +40,26 @@ Configure libvirt environment for booting from network via UEFI HTTP Boot, add t
         </dhcp>
       </ip>
       <dnsmasq:options>
-        <dnsmasq:option value='dhcp-vendorclass=set:efi-http,HTTPClient:Arch:00016'/>
-        <dnsmasq:option value='dhcp-option-force=tag:efi-http,60,HTTPClient'/>
-        <dnsmasq:option value='dhcp-boot=tag:efi-http,&quot;http://192.168.122.1:8000/boot/shim.efi&quot;'/>
+        <dnsmasq:option value='dhcp-vendorclass=set:bios,PXEClient:Arch:00000'/>
+        <dnsmasq:option value='dhcp-vendorclass=set:efi,PXEClient:Arch:00007'/>
+        <dnsmasq:option value='dhcp-vendorclass=set:efix64,PXEClient:Arch:00009'/>
+        <dnsmasq:option value='dhcp-vendorclass=set:efihttp,HTTPClient:Arch:00016'/>
+        <dnsmasq:option value='dhcp-option-force=tag:efihttp,60,HTTPClient'/>
+        <dnsmasq:option value='dhcp-match=set:ipxe-http,175,19'/>
+        <dnsmasq:option value='dhcp-match=set:ipxe-https,175,20'/>
+        <dnsmasq:option value='dhcp-match=set:ipxe-menu,175,39'/>
+        <dnsmasq:option value='dhcp-match=set:ipxe-pxe,175,33'/>
+        <dnsmasq:option value='dhcp-match=set:ipxe-bzimage,175,24'/>
+        <dnsmasq:option value='dhcp-match=set:ipxe-iscsi,175,17'/>
+        <dnsmasq:option value='dhcp-match=set:ipxe-efi,175,36'/>
+        <dnsmasq:option value='tag-if=set:ipxe-ok,tag:ipxe-http,tag:ipxe-menu,tag:ipxe-iscsi,tag:ipxe-pxe,tag:ipxe-bzimage'/>
+        <dnsmasq:option value='tag-if=set:ipxe-ok,tag:ipxe-http,tag:ipxe-menu,tag:ipxe-iscsi,tag:ipxe-efi'/>
+        <dnsmasq:option value='dhcp-boot=tag:bios,bootstrap/ipxe/undionly.kpxe,,192.168.122.1'/>
+        <dnsmasq:option value='dhcp-boot=tag:!ipxe-ok,tag:efi,bootstrap/ipxe/ipxe-snponly-x86_64.efi,,192.168.122.1'/>
+        <dnsmasq:option value='dhcp-boot=tag:!ipxe-ok,tag:efi64,bootstrap/ipxe/ipxe-snponly-x86_64.efi,,192.168.122.1'/>
+        <dnsmasq:option value='dhcp-boot=tag:!ipxe-ok,tag:efihttp,http://192.168.122.1:8000/bootstrap/ipxe/ipxe-snponly-x86_64.efi'/>
+        <dnsmasq:option value='dhcp-boot=tag:ipxe-ok,tag:!efihttp,bootstrap/ipxe/chain.ipxe,,192.168.122.1'/>
+        <dnsmasq:option value='dhcp-boot=tag:ipxe-ok,tag:efihttp,http://192.168.122.1:8000/bootstrap/ipxe/chain.ipxe'/>
       </dnsmasq:options>
     </network>
 
@@ -51,9 +68,25 @@ Make sure to update the HTTP address in case you want to use different network t
     sudo virsh net-destroy default
     sudo virsh net-start default
 
-Now, boot an empty UEFI VM on this network from network, it must be set for UEFI HTTP Boot. Enter EFI firmware by pressing ESC key after it is powered on, enter "Boot manager" screen and make "UEFI HTTPv4 [MAC]" the first boot option.
+When testing, create three VMs:
+
+* BIOS for PXE testing
+* EFI for PXE EFI testing, SecureBoot must be turned off in the firmware
+* EFI-HTTP for HTTP EFI testing, SecureBoot must be turned off in the firmware
 
 Note you cannot use libvirt for real provisioning as there are some issues with libvirt driver, it does not boot into the OS after restart: https://github.com/foresterorg/forester/issues/6
+
+## Development of TFTP
+
+The built-in TFTP server is running on port 6969 by default to allow development on non-root accounts. To debug TFTP, simply forward the traffic:
+
+    sudo iptables -t nat -I PREROUTING -p udp --dport 69 -j REDIRECT --to-ports 6969
+
+When using firewalld
+
+    sudo firewall-cmd --add-forward-port=port=69:proto=udp:toport=6969
+
+Use `--zone` option to specify a different zone when needed and `--permanent` to set it permanently
 
 ## Redfish emulators
 

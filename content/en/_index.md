@@ -50,7 +50,7 @@ title: Forester Project
 
 
 {{% blocks/lead color="primary" %}}
-Forester provides unattended bare-metal installation network boot workflow for Fedora, Red Hat or compatible OS images created by Image Builder. It utilizes modern technologies like UEFI HTTP Boot, Redfish, Anaconda, SecureBoot and X509 for fast and secure image-based OS installations. Forester is a simple service with REST/RPC API and CLI.
+Forester provides unattended bare-metal installation network boot workflow for Fedora, Red Hat or compatible OS images created by Image Builder. It utilizes PXE/EFI-HTTP, Redfish, Anaconda, SecureBoot and X509 for fast and secure image-based OS installations. Forester is a simple service with REST/RPC API and CLI.
 
 The project is currently in early development and we are looking for feedback.
 {{% /blocks/lead %}}
@@ -63,19 +63,19 @@ Upload OS images created by [Image Builder](https://www.osbuild.org/) or [Red Ha
 
 
 {{% blocks/feature icon="fa-magnifying-glass" title="Configure" %}}
-Setup your servers for HTTP UEFI Boot and configure Redfish credentials in Forester so it can discover your infrastructure.
+Setup your servers for HTTP UEFI Boot or PXE and configure Redfish credentials in Forester so it can discover your infrastructure. Configure your own DHCP server to advertise Forester as HTTP/TFTP service.
 {{% /blocks/feature %}}
 
 
 {{% blocks/feature icon="fa-gas-pump" title="Deploy" %}}
-Start deploying images onto your bare-metal servers en-masse via Forester API or CLI.
+Start deploying images onto your bare-metal servers en-masse via Forester API or CLI. Manage power operations or investigate Anaconda installer logs as needed.
 {{% /blocks/feature %}}
 {{% /blocks/section %}}
 
 
 {{% blocks/section %}}
 
-To evaluate Forester, you need a Linux machine capable of running Podman containers (e.g. RHEL VM with 4 GB RAM). Servers for deployment need to have UEFI 2.1 or higher (with UEFI HTTP Boot support) and out-of-band management capability with Redfish protocol enabled (Dell IDRAC, HP iLO and others). The only communication channel is HTTP (HTTPS) and there is no need to configure anything on the DHCP for proof-of-concept deployments.
+To evaluate Forester, you need a Linux machine capable of running Podman containers (e.g. RHEL VM with 4 GB RAM). Servers for deployment need to have out-of-band management capability via Redfish protocol enabled (Dell IDRAC, HP iLO and others).
 {.h3 .text-center}
 
 {{% /blocks/section %}}

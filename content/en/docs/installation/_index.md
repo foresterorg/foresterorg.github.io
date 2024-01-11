@@ -23,9 +23,22 @@ The following commands create two new volumes for postgres database and images, 
 
     podman volume create forester-pg
     podman volume create forester-img
-    podman pod create --name forester -p 8000:8000
+    podman pod create --name forester -p 8000:8000 -p 6969:6969/udp
     podman run -d --name forester-pg --pod forester -e POSTGRESQL_USER=forester -e POSTGRESQL_PASSWORD=forester -e POSTGRESQL_DATABASE=forester -v forester-pg:/var/lib/pgsql/data:Z quay.io/fedora/postgresql-15; sleep 5s
     podman run -d --name forester-api --pod forester -e DATABASE_USER=forester -e DATABASE_PASSWORD=forester -e IMAGES_DIR=/img -v forester-img:/img:Z quay.io/forester/controller:latest
+
+Communication ports:
+
+* 8000 - HTTP
+* 6969 - TFTP
+
+Since exporting port 69 for the TFTP service would require root, we recommend to forward port 69 instead. This is only needed when using PXE, in case of UEFI-HTTP booting the TFTP service is unused:
+
+    sudo iptables -t nat -I PREROUTING -p udp --dport 69 -j REDIRECT --to-ports 6969
+
+Or when using firewalld:
+
+    sudo firewall-cmd --add-forward-port=port=69:proto=udp:toport=6969
 
 To uninstall everything up including data and images:
 
@@ -35,14 +48,10 @@ To uninstall everything up including data and images:
 
 ### Docker compose
 
-To start the Forester controller and Postgres database on port 8000 with data for both database and images stored in `./data` directory run:
+To start the Forester via docker-compose or podman-compose:
 
     curl https://raw.githubusercontent.com/foresterorg/forester/main/compose.yaml > compose.yaml
-    EXPOSED_APP_PORT=8000 DATA_DIR=./data podman-compose up -d
-
-This command requires [podman-compose](https://github.com/containers/podman-compose) (available in Fedora and EPEL). You can use docker-compose as well, it is known to work but be aware we do not test against Docker during development.
-
-To remove Forester completely, stop containers and remove them, and the data directory.
+    docker-compose up -d
 
 ### Compiling from source
 
