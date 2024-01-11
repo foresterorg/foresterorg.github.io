@@ -22,7 +22,7 @@ Forester has been designed with simplicity in mind, you only need an Anaconda OS
 
 # Service installation
 
-The Forester service provides all functionality through port 8000 (HTTP) and stores some data in Postgres database. The recommended installation is via podman:
+The Forester service is a single process with data stored in Postgres database and images in a directory. The recommended installation is via podman:
 
     podman volume create forester-pg
     podman volume create forester-img
