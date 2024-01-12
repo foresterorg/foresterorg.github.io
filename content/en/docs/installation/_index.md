@@ -23,9 +23,14 @@ The following commands create two new volumes for postgres database and images, 
 
     podman volume create forester-pg
     podman volume create forester-img
+    podman volume create forester-log
     podman pod create --name forester -p 8000:8000 -p 6969:6969/udp
-    podman run -d --name forester-pg --pod forester -e POSTGRESQL_USER=forester -e POSTGRESQL_PASSWORD=forester -e POSTGRESQL_DATABASE=forester -v forester-pg:/var/lib/pgsql/data:Z quay.io/fedora/postgresql-15; sleep 5s
-    podman run -d --name forester-api --pod forester -e DATABASE_USER=forester -e DATABASE_PASSWORD=forester -e IMAGES_DIR=/img -v forester-img:/img:Z quay.io/forester/controller:latest
+    podman run -d --name forester-pg --pod forester \
+        -e POSTGRESQL_USER=forester -e POSTGRESQL_PASSWORD=forester -e POSTGRESQL_DATABASE=forester \
+        -v forester-pg:/var/lib/pgsql/data:Z quay.io/fedora/postgresql-15; sleep 5s
+    podman run -d --name forester-api --pod forester \
+        -e DATABASE_USER=forester -e DATABASE_PASSWORD=forester \
+        -v forester-img:/images:Z -v forester-log:/logs:Z quay.io/forester/controller:latest
 
 Communication ports:
 
@@ -39,6 +44,8 @@ Since exporting port 69 for the TFTP service would require root, we recommend to
 Or when using firewalld:
 
     sudo firewall-cmd --add-forward-port=port=69:proto=udp:toport=6969
+
+Make sure to add `--zone=libvirt` when testing Forester via libvirt.
 
 To uninstall everything up including data and images:
 

@@ -105,7 +105,16 @@ An example for user session (URI accepts both `unix` socket or `qemu` paths):
 
 Or via TCP connection (TLS is not supported):
 
-    forester-cli appliance create --kind libvirt --name remote --uri tcp://my.libvirt.local:16509
+    forester-cli appliance create --kind libvirt --name remote --uri tcp://host.containers.internal:16509
+
+Replace `host.containers.internal` with the Forester hostname, this is a special name that will work for Podman to access host system. To access libvirt over TCP, it must be configured to do so:
+
+    grep '^[^#]' /etc/libvirt/libvirtd.conf
+    auth_tcp = "none"
+
+And:
+
+    systemctl enable --now libvirtd-tcp.socket
 
 It is possible to create no operation appliance which does nothing or `redfish_manual` appliance which performs detection of systems, however, it does not perform any power operations. With `noop` appliance, systems need to be registered manually whereas with `redfish_manual` systems can be detected automatically.
 

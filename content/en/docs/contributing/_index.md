@@ -86,7 +86,7 @@ When using firewalld
 
     sudo firewall-cmd --add-forward-port=port=69:proto=udp:toport=6969
 
-Use `--zone` option to specify a different zone when needed and `--permanent` to set it permanently
+Make sure to add `--zone=libvirt` when testing Forester via libvirt and `--permanent` to set it permanently
 
 ## Redfish emulators
 

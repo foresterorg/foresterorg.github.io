@@ -22,10 +22,11 @@ Forester has been designed with simplicity in mind, you only need an Anaconda OS
 
 # Service installation
 
-The Forester service is a single process with data stored in Postgres database and images in a directory. The recommended installation is via podman:
+The Forester service is a single process with data stored in Postgres database and few directories. The recommended installation is via podman:
 
     podman volume create forester-pg
     podman volume create forester-img
+    podman volume create forester-log
     podman pod create --name forester -p 8000:8000 -p 6969:6969/udp
     podman run -d --name forester-pg --pod forester \
         -e POSTGRESQL_USER=forester \
@@ -36,8 +37,8 @@ The Forester service is a single process with data stored in Postgres database a
     podman run -d --name forester-api --pod forester \
         -e DATABASE_USER=forester \
         -e DATABASE_PASSWORD=forester \
-        -e IMAGES_DIR=/img \
-        -v forester-img:/img:Z \
+        -v forester-img:/images:Z \
+        -v forester-log:/logs:Z \
         quay.io/forester/controller:latest
 
 Change `-p` argument if you wish to use different port than 8000 for HTTP communication. Note that for PXE the TFTP UDP port 69 must be available, however, this is not possible to do with rootless containers. We recommend to simply forward the port 69 to 6969:
