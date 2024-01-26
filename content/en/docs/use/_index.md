@@ -251,19 +251,15 @@ A system can have zero to any number of snippets associated and one extra "custo
 
 ## Deploy images
 
-Systems are either **released** or **acquired**. By acquisition, an operator performs installation of a specific image onto the hardware:
+Deploying is done via `deploy` command:
 
-    forester-cli system acquire lynn --imagename RHEL9
+    forester-cli system deploy lynn --imagename RHEL9
 
 To customize installation with snippets:
 
-    forester-cli system acquire lynn --imagename RHEL9 --snippets SingleVolume SharedPass --customsnippet "%pre\necho Hello\n%end\n"
+    forester-cli system deploy lynn --imagename RHEL9 --snippets SingleVolume SharedPass --customsnippet "%pre\necho Hello\n%end\n"
 
-To release a system and put it back to the pool of available systems:
-
-    forester-cli system release lynn
-
-Warning: There is no authentication or authorization in the API, anyone can acquire or release systems or even add new appliances.
+Warning: There is no authentication or authorization in the API, anyone can deploy or even add new appliances.
 
 ## Troubleshooting
 

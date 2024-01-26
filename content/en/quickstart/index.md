@@ -187,15 +187,13 @@ Keep in mind that the official Fedora or Red Hat Enterprise Linux installer ISO 
 
 # Deploy images
 
-To install an image onto a system, perform `acquire` operation and provide both image name and system name or one of its MAC addresses:
+To install an image onto a system, perform `deploy` operation and provide both image name and system name or one of its MAC addresses:
 
-    forester-cli system acquire Lynn --imagename RHEL9-2023-11a
+    forester-cli system deploy Lynn --imagename RHEL9-2023-11a
 
 Forester will power cycle the server, Anaconda will boot up, receive kickstart instructions, download the tarball, perform drive partitioning and then copy the OS image to the system instead of traditional RPM installation.
 
-Installation can still be customized using [kickstart snippets](/docs/use/#customizing-installation), this is particularly helpful for drive partitioning, users and passwords or running custom shell scripts at the end of the installation. To release a system and put it back to the pool of available systems:
-
-    forester-cli system release Lynn
+Installation can still be customized using [kickstart snippets](/docs/use/#customizing-installation), this is particularly helpful for drive partitioning, users and passwords or running custom shell scripts at the end of the installation.
 
 {{% /blocks/section %}}
 
