@@ -50,7 +50,7 @@ title: Forester Project
 
 
 {{% blocks/lead color="primary" %}}
-Forester provides unattended bare-metal installation network boot workflow for Fedora, Red Hat or compatible OS images created by Image Builder. It utilizes PXE/EFI-HTTP, Redfish, Anaconda, SecureBoot and X509 for fast and secure image-based OS installations. Forester is a simple service with REST/RPC API and CLI.
+Forester provides unattended bare-metal installation network boot workflow for Fedora, Red Hat or compatible OS images or bootable container images created by Image Builder. It utilizes PXE/EFI-HTTP, Redfish, Anaconda, SecureBoot and X509 for fast and secure image-based OS installations. Forester is a simple service with REST/RPC API, CLI and minimum configuration.
 
 The project is currently in early development and we are looking for feedback.
 {{% /blocks/lead %}}
@@ -58,7 +58,7 @@ The project is currently in early development and we are looking for feedback.
 
 {{% blocks/section color="dark" type="row" %}}
 {{% blocks/feature icon="fa-upload" title="Upload" %}}
-Upload OS images created by [Image Builder](https://www.osbuild.org/) or [Red Hat Hybrid Cloud Console](https://console.redhat.com/insights/image-builder) into Forester service.
+Upload OS images created by [Image Builder](https://www.osbuild.org/) or [Red Hat Hybrid Cloud Console](https://console.redhat.com/insights/image-builder) into Forester service. Supports bare-metal OS images and bootable container ISOs.
 {{% /blocks/feature %}}
 
 
@@ -74,12 +74,12 @@ Start deploying images onto your bare-metal servers en-masse via Forester API or
 
 
 {{% blocks/section %}}
+While there are other provisioning services, Forester is built for Anaconda installer only. This makes it different, this makes it simple.
 
-To evaluate Forester, you need a Linux machine capable of running Podman containers (e.g. RHEL VM with 4 GB RAM). Servers for deployment need to have out-of-band management capability via Redfish protocol enabled (Dell IDRAC, HP iLO and others).
+To evaluate Forester, you need a Linux machine capable of running Podman containers (e.g. RHEL VM with 4 GB RAM). Servers for deployment need to have out-of-band management capability via Redfish protocol enabled (Dell IDRAC, HP iLO and others). Libvirt is supported for POC environments.
 {.h3 .text-center}
 
 {{% /blocks/section %}}
-
 
 <div class="row justify-content-md-center">
   <div class="col-lg-5 col-md-8">
