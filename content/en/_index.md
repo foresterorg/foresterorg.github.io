@@ -75,8 +75,6 @@ Start deploying images onto your bare-metal servers en-masse via Forester API or
 
 {{% blocks/section %}}
 
-While there are other provisioning services, Forester is built for Anaconda installer only. This makes it different, this makes it simple.
-
 To evaluate Forester, you need a Linux machine capable of running Podman containers (e.g. RHEL VM with 4 GB RAM). Servers for deployment need to have out-of-band management capability via Redfish protocol enabled (Dell IDRAC, HP iLO and others). Libvirt is supported for POC environments.
 {.h3 .text-center}
 
