@@ -78,7 +78,7 @@ Note you cannot use libvirt for real provisioning as there are some issues with 
 
 ## Development of TFTP
 
-The built-in TFTP server is running on port 6969 by default to allow development on non-root accounts. To debug TFTP, simply forward the traffic:
+The built-in TFTP server is running on port 6969 by default to allow development on non-root accounts. To start and debug the application's built in TFTP listener as a regular (developer) account, simply forward the traffic:
 
     sudo iptables -t nat -I PREROUTING -p udp --dport 69 -j REDIRECT --to-ports 6969
 
@@ -87,6 +87,8 @@ When using firewalld
     sudo firewall-cmd --add-forward-port=port=69:proto=udp:toport=6969
 
 Make sure to add `--zone=libvirt` when testing Forester via libvirt and `--permanent` to set it permanently
+
+Note this will not work when running the application via podman or docker, you can only use this for local development.
 
 ## Redfish emulators
 

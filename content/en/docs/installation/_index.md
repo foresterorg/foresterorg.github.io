@@ -24,7 +24,7 @@ The following commands create two new volumes for postgres database and images, 
     podman volume create forester-pg
     podman volume create forester-img
     podman volume create forester-log
-    podman pod create --name forester -p 8000:8000 -p 6969:6969/udp
+    podman pod create --name forester -p 8000:8000 -p 69:6969/udp
     podman run -d --name forester-pg --pod forester \
         -e POSTGRESQL_USER=forester -e POSTGRESQL_PASSWORD=forester -e POSTGRESQL_DATABASE=forester \
         -v forester-pg:/var/lib/pgsql/data:Z quay.io/fedora/postgresql-15; sleep 5s
@@ -34,18 +34,23 @@ The following commands create two new volumes for postgres database and images, 
 
 Communication ports:
 
-* 8000 - HTTP
-* 6969 - TFTP
+* 8000 TCP - HTTP
+* 6969 UDP - TFTP
 
-Since exporting port 69 for the TFTP service would require root, we recommend to forward port 69 instead. This is only needed when using PXE, in case of UEFI-HTTP booting the TFTP service is unused:
+Podman will likely not be allowed to bind port lower than 1024, unless executed as root or the lower port is allowed via:
 
-    sudo iptables -t nat -I PREROUTING -p udp --dport 69 -j REDIRECT --to-ports 6969
+    sudo sysctl net.ipv4.ip_unprivileged_port_start=69
 
-Or when using firewalld:
+In order for TFTP to work through NAT, connection tracking modules must be loaded too:
 
-    sudo firewall-cmd --add-forward-port=port=69:proto=udp:toport=6969
+    sudo modprobe nf_conntrack_tftp
+    sudo modprobe nf_nat_tftp
 
-Make sure to add `--zone=libvirt` when testing Forester via libvirt.
+To make both changes permanent on Fedora or Red Hat system:
+
+    echo "net.ipv4.ip_unprivileged_port_start=69" > /etc/sysctl.d/10-unprivileged_ports.conf
+    echo "install nf_conntrack_tftp" > /etc/modprobe.d/tftp.conf
+    echo "install nf_nat_tftp" >> /etc/modprobe.d/tftp.conf
 
 To uninstall everything up including data and images:
 

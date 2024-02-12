@@ -22,12 +22,16 @@ Forester has been designed with simplicity in mind, you only need an Anaconda OS
 
 # Service installation
 
-The Forester service is a single process with data stored in Postgres database and few directories. The recommended installation is via podman:
+The Forester service is a single process with data stored in Postgres database and few directories. The recommended installation is via podman or docker. For TFTP (PXE) support, UDP port 69 must be mapped which is only available to root, unless unprivileged port is allowed:
+
+    sysctl net.ipv4.ip_unprivileged_port_start=69
+
+To run the application and database in a pod:
 
     podman volume create forester-pg
     podman volume create forester-img
     podman volume create forester-log
-    podman pod create --name forester -p 8000:8000 -p 6969:6969/udp
+    podman pod create --name forester -p 8000:8000 -p 69:6969/udp
     podman run -d --name forester-pg --pod forester \
         -e POSTGRESQL_USER=forester \
         -e POSTGRESQL_PASSWORD=forester \
@@ -41,9 +45,12 @@ The Forester service is a single process with data stored in Postgres database a
         -v forester-log:/logs:Z \
         quay.io/forester/controller:latest
 
-Change `-p` argument if you wish to use different port than 8000 for HTTP communication. Note that for PXE the TFTP UDP port 69 must be available, however, this is not possible to do with rootless containers. We recommend to simply forward the port 69 to 6969:
+Change `-p` argument if you wish to use different port than 8000 for HTTP communication.
 
-    sudo firewall-cmd --add-forward-port=port=69:proto=udp:toport=6969
+In order to pass TFTP through NAT, you may require to enable connection tracking:
+
+    sudo modprobe nf_conntrack_tftp
+    sudo modprobe nf_nat_tftp
 
 Uninstallation is easy and is covered in the [documentation](/docs/).
 
