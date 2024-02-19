@@ -25,7 +25,12 @@ When you start the backend for the first time, it will migrate database (create 
 
 Configure libvirt environment for booting from network via UEFI HTTP Boot, add the five "dnsmasq" options into the "default" libvirt network. Also, optionally configure PXEv4 and IPEv6 to return a non-existing file ("USE_HTTP" in the example) to speed up OVMF firmware to fallback to HTTPv4:
 
+Edit the default network
+
     sudo virsh net-edit default
+
+To the following (keep your uuid and IP configuration)
+
     <network xmlns:dnsmasq='http://libvirt.org/schemas/network/dnsmasq/1.0'>
       <name>default</name>
       <uuid>9f3e4377-3d33-42df-b34c-7880295d24ee</uuid>
@@ -33,7 +38,6 @@ Configure libvirt environment for booting from network via UEFI HTTP Boot, add t
       <bridge name='virbr0' zone='trusted' stp='on' delay='0'/>
       <mac address='52:54:00:7a:00:01'/>
       <ip address='192.168.122.1' netmask='255.255.255.0'>
-        <tftp root='/var/lib/tftpboot'/>
         <dhcp>
           <range start='192.168.122.2' end='192.168.122.254'/>
           <bootp file='USE_HTTP'/>
