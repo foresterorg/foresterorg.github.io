@@ -253,11 +253,11 @@ A system can have zero to any number of snippets associated and one extra "custo
 
 Deploying is done via `deploy` command:
 
-    forester-cli system deploy lynn --imagename RHEL9
+    forester-cli system deploy lynn --image RHEL9
 
 To customize installation with snippets:
 
-    forester-cli system deploy lynn --imagename RHEL9 --snippets SingleVolume SharedPass --customsnippet "%pre\necho Hello\n%end\n"
+    forester-cli system deploy lynn --image RHEL9 --snippets SingleVolume SharedPass --customsnippet "%pre\necho Hello\n%end\n"
 
 Warning: There is no authentication or authorization in the API, anyone can deploy or even add new appliances.
 
