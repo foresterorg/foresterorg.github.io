@@ -19,12 +19,12 @@ The recommended way is Podman pod.
 
 ### Podman pod
 
-The following commands create two new volumes for postgres database and images, a new pod named `forester` with two containers named `forester-pg` and `forester-api` exposing port 8000 for the REST API.
+The following commands create two new volumes for postgres database and images, a new pod named `forester` with two containers named `forester-pg` and `forester-api` exposing port 8000 for the REST API and files.
 
     podman volume create forester-pg
     podman volume create forester-img
     podman volume create forester-log
-    podman pod create --name forester -p 8000:8000 -p 69:6969/udp
+    podman pod create --name forester -p 8000:8000
     podman run -d --name forester-pg --pod forester \
         -e POSTGRESQL_USER=forester -e POSTGRESQL_PASSWORD=forester -e POSTGRESQL_DATABASE=forester \
         -v forester-pg:/var/lib/pgsql/data:Z quay.io/fedora/postgresql-15; sleep 5s
@@ -32,14 +32,13 @@ The following commands create two new volumes for postgres database and images, 
         -e DATABASE_USER=forester -e DATABASE_PASSWORD=forester \
         -v forester-img:/images:Z -v forester-log:/logs:Z quay.io/forester/controller:latest
 
-Communication ports:
-
-* 8000 TCP - HTTP
-* 6969 UDP - TFTP
-
-Podman will likely not be allowed to bind port lower than 1024, unless executed as root or the lower port is allowed via:
+TFTP service, which is required for PXE, must be started separately with `--network host` option. Since the service port is lower than 1024, it must be executed as root or unprivileged port boundary can be configured:
 
     sudo sysctl net.ipv4.ip_unprivileged_port_start=69
+
+To start the TFTP-HTTP proxy which will proxy TFTP downloads to `http://localhost:8000` by default (configurable via options):
+
+    podman run -d --name forester-proxy --network host quay.io/forester/controller:latest /forester-proxy --verbose
 
 In order for TFTP to work through NAT, connection tracking modules must be loaded too:
 

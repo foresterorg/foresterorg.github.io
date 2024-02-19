@@ -22,37 +22,26 @@ Forester has been designed with simplicity in mind, you only need an Anaconda OS
 
 # Service installation
 
-The Forester service is a single process with data stored in Postgres database and few directories. The recommended installation is via podman or docker. For TFTP (PXE) support, UDP port 69 must be mapped which is only available to root, unless unprivileged port is allowed:
-
-    sysctl net.ipv4.ip_unprivileged_port_start=69
-
-To run the application and database in a pod:
+The Forester service is a single process with data stored in Postgres database and few directories. The recommended installation is via podman or docker.
 
     podman volume create forester-pg
     podman volume create forester-img
     podman volume create forester-log
-    podman pod create --name forester -p 8000:8000 -p 69:6969/udp
+    podman pod create --name forester -p 8000:8000
     podman run -d --name forester-pg --pod forester \
-        -e POSTGRESQL_USER=forester \
-        -e POSTGRESQL_PASSWORD=forester \
-        -e POSTGRESQL_DATABASE=forester \
-        -v forester-pg:/var/lib/pgsql/data:Z \
-        quay.io/fedora/postgresql-15; sleep 5s
+        -e POSTGRESQL_USER=forester -e POSTGRESQL_PASSWORD=forester -e POSTGRESQL_DATABASE=forester \
+        -v forester-pg:/var/lib/pgsql/data:Z quay.io/fedora/postgresql-15; sleep 5s
     podman run -d --name forester-api --pod forester \
-        -e DATABASE_USER=forester \
-        -e DATABASE_PASSWORD=forester \
-        -v forester-img:/images:Z \
-        -v forester-log:/logs:Z \
-        quay.io/forester/controller:latest
+        -e DATABASE_USER=forester -e DATABASE_PASSWORD=forester \
+        -v forester-img:/images:Z -v forester-log:/logs:Z quay.io/forester/controller:latest
 
-Change `-p` argument if you wish to use different port than 8000 for HTTP communication.
+TFTP service, which is required for PXE, must be started separately with `--network host` option. Since the service port is lower than 1024, it m
+ust be executed as root or unprivileged port boundary can be configured:
 
-In order to pass TFTP through NAT, you may require to enable connection tracking:
+    sudo sysctl net.ipv4.ip_unprivileged_port_start=69
+    podman run -d --name forester-proxy --network host quay.io/forester/controller:latest /forester-proxy --verbose
 
-    sudo modprobe nf_conntrack_tftp
-    sudo modprobe nf_nat_tftp
-
-Uninstallation is easy and is covered in the [documentation](/docs/).
+Visit [documentation](/docs/) for more information about TFTP service connection tracking for NAT networks, permanent unprivileged port settings or uninstallation instructions.
 
 Download and extract the [CLI for Linux/Mac/Windows](https://github.com/foresterorg/forester/releases) named `forester-cli`.
 
