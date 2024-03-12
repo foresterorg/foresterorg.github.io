@@ -27,7 +27,7 @@ The Forester service is a single process with data stored in Postgres database a
     podman volume create forester-pg
     podman volume create forester-img
     podman volume create forester-log
-    podman pod create --name forester -p 8000:8000
+    podman pod create --name forester -p 8000:8000 -p 8514:8514
     podman run -d --name forester-pg --pod forester \
         -e POSTGRESQL_USER=forester -e POSTGRESQL_PASSWORD=forester -e POSTGRESQL_DATABASE=forester \
         -v forester-pg:/var/lib/pgsql/data:Z quay.io/fedora/postgresql-15; sleep 5s
