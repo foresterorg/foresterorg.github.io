@@ -48,7 +48,7 @@ languageName ="English"
 weight = 1
 [languages.en.params]
 title = "Forester Project"
-description = "A Docsy example site"
+description = "Unattended bare-metal image-based Anaconda installation service."
 
 [markup]
   [markup.goldmark]
